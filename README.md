@@ -9,6 +9,8 @@
 
 `MagicGoBall` is a discord bot that is used to return answers to questions asked by users. Just like the product, Magic8Ball.
 
+# Setup
+For instructions on how to start the bot, see [here](/docs/SETUP.md).  
 ## ⚠️ License
 
 `MagicGoBall` is free and open-source software licensed under the [MIT License](/LICENSE).
