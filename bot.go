@@ -7,13 +7,17 @@ import (
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/joho/godotenv"
 )
 
 
 func main() {
 
+	//Load .env file
+	err := godotenv.Load()
+
 	// Create a new Discord session using the provided bot token.
-	dg, err := discordgo.New("Bot " + "ODg2OTMyNzI1MDQ5NzQ1NTE5.GHEEAG.aelkWYwRluiSARADWbs6xJvFqIXz-LgcGJxpyM")
+	dg, err := discordgo.New("Bot " + os.Getenv("DISCORD_BOT_TOKEN"))
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
 		return
@@ -22,7 +26,6 @@ func main() {
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(messageCreate)
 
-	// In this example, we only care about receiving message events.
 	dg.Identify.Intents = discordgo.IntentsGuildMessages
 
 	// Open a websocket connection to Discord and begin listening.
@@ -42,8 +45,6 @@ func main() {
 	dg.Close()
 }
 
-// This function will be called (due to AddHandler above) every time a new
-// message is created on any channel that the authenticated bot has access to.
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// Ignore all messages created by the bot itself
