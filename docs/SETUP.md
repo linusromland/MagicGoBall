@@ -9,8 +9,11 @@
 ## Install dependencies
 
 ```bash
-go get -u github.com/bwmarrin/discordgo
-go get -u github.com/joho/godotenv
+# Navigate to the bot directory
+cd bot
+
+# Install dependencies
+go get
 ```
 
 ## Environment variables
