@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"os"
 	"os/signal"
+	"regexp"
 	"strings"
 	"syscall"
 
@@ -103,6 +104,17 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// Convert message to lowercase
 	message := m.Content[len(prefix):]
 	message = strings.ToLower(message)
+
+	// Remove all spaces
+	message = strings.Replace(message, " ", "", -1)
+
+	// Remove all non-alphanumeric characters
+	reg, err := regexp.Compile("[^a-zA-Z0-9]+")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	message = reg.ReplaceAllString(message, "")
 
 	// Convert string containg letters to Int64
 	h := md5.New()
