@@ -17,16 +17,6 @@ jobs:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Extract version from package.json
-              run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
-
-            - name: Check if image with version already exists
-              run: |
-                  if curl --silent --fail --location "https://ghcr.io/v2/linusromland/magicgoball/manifests/${{ env.VERSION }}" > /dev/null; then
-                    echo "IMAGE_EXISTS=yes" >> $GITHUB_ENV
-                  else
-                    echo "IMAGE_EXISTS=no" >> $GITHUB_ENV
-                  fi
             - name: Build and Push Image
               if: env.IMAGE_EXISTS == 'no'
               uses: docker/build-push-action@v2
@@ -36,4 +26,4 @@ jobs:
                   push: true
                   tags: |
                       ghcr.io/linusromland/magicgoball:latest
-                      ghcr.io/linusromland/magicgoball:${{ env.VERSION }}
+                      ghcr.io/linusromland/magicgoball:${{ github.sha }}
